@@ -52,7 +52,6 @@ public class Display extends JPanel {
 					genNewList.stop();
 					index = 0;
 					disableButtons(false);
-					performCheck();
 					return;
 				} else {
 					Elements.Node temp = nodes[index];
@@ -87,29 +86,59 @@ public class Display extends JPanel {
 	}
 	
 	private void initClickables() {
-		buttons = new JButton[2];
+		buttons = new JButton[5];
 		
-		JButton button1 = new JButton("Generate New List");
-		button1.addActionListener(new ActionListener() {
+		JButton genListButton = new JButton("Generate New List");
+		genListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				disableButtons(true);
 				genNewList.start();
 			}
 		});
-		button1.setBounds(100, 600, 150, 30);
-		add(button1);
-		buttons[0] = button1;
+		genListButton.setBounds(100, 600, 150, 30);
+		add(genListButton);
+		buttons[0] = genListButton;
 		
-		JButton button2 = new JButton("Bubblesort");
-		button2.addActionListener(new ActionListener() {
+		JButton bubbleSortButton = new JButton("BubbleSort");
+		bubbleSortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				disableButtons(true);
 				bubbleSort.run();
 			}
 		});
-		button2.setBounds(275, 600, 150, 30);
-		add(button2);
-		buttons[1] = button2;
+		bubbleSortButton.setBounds(275, 600, 150, 30);
+		add(bubbleSortButton);
+		buttons[1] = bubbleSortButton;
+		
+		JButton mergeSortButton = new JButton("MergeSort");
+		mergeSortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Run mergesort");
+			}
+		});
+		mergeSortButton.setBounds(450, 600, 150, 30);
+		add(mergeSortButton);
+		buttons[2] = mergeSortButton;
+		
+		JButton quickSortButton= new JButton("QuickSort");
+		quickSortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Run mergesort");
+			}
+		});
+		quickSortButton.setBounds(625, 600, 150, 30);
+		add(quickSortButton);
+		buttons[3] = quickSortButton;
+		
+		JButton selectSortButton= new JButton("SelectSort");
+		selectSortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Run mergesort");
+			}
+		});
+		selectSortButton.setBounds(800, 600, 150, 30);
+		add(selectSortButton);
+		buttons[4] = selectSortButton;
 	}
 	
 	private Color getColor(int code) {
@@ -131,19 +160,6 @@ public class Display extends JPanel {
 			g.setColor(getColor(nodes[i].getCode()));
 			nodes[i].setCode(PaintCode.BLACK); // Reset color to black
 			g.fillRect(87 + (i*11), 0, 10, nodes[i].getVal());
-		}
-	}
-
-	private void performCheck() { // Total value should add up to 25750
-		int total = 0;
-		for(int i = 0; i < nodes.length; i++) {
-			total += nodes[i].getVal();
-		}
-		
-		if(total == 25750) {
-			System.out.println("Passes immutable node vals check");
-		} else {
-			System.out.println("FAILED Total vals was: " + total);
 		}
 	}
 	
