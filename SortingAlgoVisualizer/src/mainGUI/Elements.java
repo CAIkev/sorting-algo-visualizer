@@ -1,7 +1,8 @@
+package mainGUI;
+
+import mainGUI.PaintCode;
 
 public class Elements {
-
-	private static final int ELEMENT_QTY = 100; 
 	
 	private Node[] elements; // Represents the entire list and its current order
 	
@@ -32,8 +33,8 @@ public class Elements {
 	
 	// Initializes with an in order list
 	public Elements() { 
-		elements = new Node[ELEMENT_QTY];
-		for(int i = 0; i < ELEMENT_QTY; i++) {
+		elements = new Node[PaintCode.ELEMENT_QTY];
+		for(int i = 0; i < PaintCode.ELEMENT_QTY; i++) {
 			elements[i] = new Node(10 + (i * 5));
 		}
 	} 

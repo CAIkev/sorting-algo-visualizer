@@ -1,21 +1,21 @@
+package sortingAlgos;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-public class SortingAlgos {
+import mainGUI.PaintCode;
+import mainGUI.Display;
+import mainGUI.Elements;
 
-	// Corresponds to codes in Display class
-	// private static final int RESET = 0; // Display resets code to 0 
-	private static final int COMPARE = 1;
-	private static final int SWAP = 2;
-	
+public class BubbleSort {
+
+	private Timer bubbleSort;
 	private Display dis;
 	private Elements.Node[] nodes;
 	
-	private Timer bubbleSort;
-	
-	public SortingAlgos(Display disIn, Elements.Node[] list) {
+	public BubbleSort(Display disIn, Elements.Node[] list) {
 		dis = disIn;
 		nodes = list;
 	}
@@ -43,8 +43,8 @@ public class SortingAlgos {
 				
 				if(!forcedChange && nodes[j].getVal() <= nodes[j+1].getVal()) {
 					forcedChange = true;
-					nodes[j].setCode(COMPARE);
-					nodes[j+1].setCode(COMPARE);
+					nodes[j].setCode(PaintCode.COMPARE);
+					nodes[j+1].setCode(PaintCode.COMPARE);
 					dis.repaint();
 					return;
 				}
@@ -56,8 +56,8 @@ public class SortingAlgos {
 					temp = nodes[j];
 					nodes[j] = nodes[j+1];
 					nodes[j+1] = temp;
-					nodes[j].setCode(SWAP);
-					nodes[j+1].setCode(SWAP);
+					nodes[j].setCode(PaintCode.SWAP);
+					nodes[j+1].setCode(PaintCode.SWAP);
 				}
 				dis.repaint();
 				j++;
@@ -65,8 +65,8 @@ public class SortingAlgos {
 			
 		});
 	}
-
-	public void runBubbleSort() {
+	
+	public void run() {
 		initBubbleSort();
 		bubbleSort.start();
 	}

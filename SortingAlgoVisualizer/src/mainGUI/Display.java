@@ -1,3 +1,7 @@
+package mainGUI;
+
+import sortingAlgos.*;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -8,20 +12,20 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import mainGUI.PaintCode;
+
 
 //All pixel lengths in this class are centered around working with 100 elements (10 pixel width per element) 
 public class Display extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	// Corresponds to codes in SortingAlgos class
-	private static final int BLACK = 0;
-	private static final int ORANGE = 1;
-	private static final int GREEN = 2;
-	
 	private Elements elements;
 	private Elements.Node[] nodes;
-	private SortingAlgos sorter;
+	private BubbleSort bubbleSort;
+	private MergeSort mergeSort;
+	private QuickSort quickSort;
+	private SelectSort selectSort;
 	
 	private JButton[] buttons;
 	private Timer genNewList;
@@ -32,7 +36,7 @@ public class Display extends JPanel {
 		initListGenerator();
 		elements = new Elements();
 		nodes = elements.getElements();
-		sorter = new SortingAlgos(this, nodes);
+		initSortingAlgos();
 	}
 	
 	// Shuffles the nodes/elements, pauses 1 ms per swap
@@ -48,6 +52,7 @@ public class Display extends JPanel {
 					genNewList.stop();
 					index = 0;
 					disableButtons(false);
+					performCheck();
 					return;
 				} else {
 					Elements.Node temp = nodes[index];
@@ -60,6 +65,13 @@ public class Display extends JPanel {
 			}
 			
 		});
+	}
+	
+	private void initSortingAlgos() {
+		bubbleSort = new BubbleSort(this, nodes);
+		mergeSort = new MergeSort(this, nodes);
+		quickSort = new QuickSort(this, nodes);
+		selectSort = new SelectSort(this, nodes);
 	}
 	
 	public void disableButtons(Boolean disable) {
@@ -92,7 +104,7 @@ public class Display extends JPanel {
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				disableButtons(true);
-				sorter.runBubbleSort();
+				bubbleSort.run();
 			}
 		});
 		button2.setBounds(275, 600, 150, 30);
@@ -101,10 +113,10 @@ public class Display extends JPanel {
 	}
 	
 	private Color getColor(int code) {
-		if(code == ORANGE) {
+		if(code == PaintCode.ORANGE) {
 			return Color.ORANGE;
 		}
-		if(code == GREEN) {
+		if(code == PaintCode.GREEN) {
 			return Color.GREEN;
 		}
 		
@@ -117,13 +129,12 @@ public class Display extends JPanel {
 		super.paintComponent(g);
 		for(int i = 0; i < elements.getCount(); i++) {
 			g.setColor(getColor(nodes[i].getCode()));
-			nodes[i].setCode(BLACK); // Reset color to black
+			nodes[i].setCode(PaintCode.BLACK); // Reset color to black
 			g.fillRect(87 + (i*11), 0, 10, nodes[i].getVal());
 		}
 	}
-	
-	/*
-	private void check() { // Total value should add up to 25750
+
+	private void performCheck() { // Total value should add up to 25750
 		int total = 0;
 		for(int i = 0; i < nodes.length; i++) {
 			total += nodes[i].getVal();
@@ -134,5 +145,6 @@ public class Display extends JPanel {
 		} else {
 			System.out.println("FAILED Total vals was: " + total);
 		}
-	}*/
+	}
+	
 }
