@@ -1,6 +1,7 @@
 # Sorting Algorithm Visualizer
 
 View sorting algorithms in action.
+
 Note: Only the exectuable jar is required to run the app.  
 
 ## Demo
