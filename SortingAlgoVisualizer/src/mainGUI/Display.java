@@ -120,7 +120,8 @@ public class Display extends JPanel {
 		JButton selectSortButton= new JButton("SelectSort");
 		selectSortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Run selectsort");
+				disableButtons(true);
+				selectSort.run();
 			}
 		});
 		selectSortButton.setBounds(800, 600, 150, 30);
