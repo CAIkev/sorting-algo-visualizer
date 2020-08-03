@@ -12,8 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import mainGUI.PaintCode;
-
 
 //All pixel lengths in this class are centered around working with 100 elements (10 pixel width per element) 
 public class Display extends JPanel {
@@ -23,8 +21,7 @@ public class Display extends JPanel {
 	private Elements elements;
 	private Elements.Node[] nodes;
 	private BubbleSort bubbleSort;
-	private MergeSort mergeSort;
-	private QuickSort quickSort;
+	private InsertSort insertSort;
 	private SelectSort selectSort;
 	
 	private JButton[] buttons;
@@ -68,8 +65,7 @@ public class Display extends JPanel {
 	
 	private void initSortingAlgos() {
 		bubbleSort = new BubbleSort(this, nodes);
-		mergeSort = new MergeSort(this, nodes);
-		quickSort = new QuickSort(this, nodes);
+		insertSort = new InsertSort(this, nodes);
 		selectSort = new SelectSort(this, nodes);
 	}
 	
@@ -86,7 +82,7 @@ public class Display extends JPanel {
 	}
 	
 	private void initClickables() {
-		buttons = new JButton[5];
+		buttons = new JButton[4];
 		
 		JButton genListButton = new JButton("Generate New List");
 		genListButton.addActionListener(new ActionListener() {
@@ -95,7 +91,7 @@ public class Display extends JPanel {
 				genNewList.start();
 			}
 		});
-		genListButton.setBounds(100, 600, 150, 30);
+		genListButton.setBounds(275, 600, 150, 30);
 		add(genListButton);
 		buttons[0] = genListButton;
 		
@@ -106,50 +102,30 @@ public class Display extends JPanel {
 				bubbleSort.run();
 			}
 		});
-		bubbleSortButton.setBounds(275, 600, 150, 30);
+		bubbleSortButton.setBounds(450, 600, 150, 30);
 		add(bubbleSortButton);
 		buttons[1] = bubbleSortButton;
 		
-		JButton mergeSortButton = new JButton("MergeSort");
-		mergeSortButton.addActionListener(new ActionListener() {
+		JButton insertSortButton = new JButton("InsertSort");
+		insertSortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Run mergesort");
+				disableButtons(true);
+				insertSort.run();
 			}
 		});
-		mergeSortButton.setBounds(450, 600, 150, 30);
-		add(mergeSortButton);
-		buttons[2] = mergeSortButton;
-		
-		JButton quickSortButton= new JButton("QuickSort");
-		quickSortButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Run mergesort");
-			}
-		});
-		quickSortButton.setBounds(625, 600, 150, 30);
-		add(quickSortButton);
-		buttons[3] = quickSortButton;
+		insertSortButton.setBounds(625, 600, 150, 30);
+		add(insertSortButton);
+		buttons[2] = insertSortButton;
 		
 		JButton selectSortButton= new JButton("SelectSort");
 		selectSortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Run mergesort");
+				System.out.println("Run selectsort");
 			}
 		});
 		selectSortButton.setBounds(800, 600, 150, 30);
 		add(selectSortButton);
-		buttons[4] = selectSortButton;
-	}
-	
-	private Color getColor(int code) {
-		if(code == PaintCode.ORANGE) {
-			return Color.ORANGE;
-		}
-		if(code == PaintCode.GREEN) {
-			return Color.GREEN;
-		}
-		
-		return Color.BLACK;
+		buttons[3] = selectSortButton;
 	}
 	
 	// The height, order, and state (color) of the lines are drawn based on the information stored in the nodes
@@ -157,8 +133,8 @@ public class Display extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for(int i = 0; i < elements.getCount(); i++) {
-			g.setColor(getColor(nodes[i].getCode()));
-			nodes[i].setCode(PaintCode.BLACK); // Reset color to black
+			g.setColor(nodes[i].getColor());
+			nodes[i].setCol(Color.BLACK); // Reset color to black
 			g.fillRect(87 + (i*11), 0, 10, nodes[i].getVal());
 		}
 	}

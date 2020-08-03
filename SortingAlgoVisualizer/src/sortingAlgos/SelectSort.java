@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import mainGUI.PaintCode;
 import mainGUI.Display;
 import mainGUI.Elements;
 
