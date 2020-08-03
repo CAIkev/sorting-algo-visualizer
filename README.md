@@ -5,6 +5,7 @@ View sorting algorithms in action.
 ## Demo
 
 Generate New List
+
 ![GIF demo_generate](img/demo_generate.gif)
 
 ## Running program
